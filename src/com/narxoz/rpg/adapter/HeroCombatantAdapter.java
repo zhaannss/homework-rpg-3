@@ -1,11 +1,11 @@
 package com.narxoz.rpg.adapter;
 
-import com.narxoz.rpg.hero.Hero;
+import com.narxoz.rpg.hero.character.BaseCh;
 
 public class HeroCombatantAdapter implements Combatant {
-    private final Hero hero;
+    private final BaseCh hero;
 
-    public HeroCombatantAdapter(Hero hero) {
+    public HeroCombatantAdapter(BaseCh hero) {
         this.hero = hero;
     }
 
@@ -16,7 +16,7 @@ public class HeroCombatantAdapter implements Combatant {
 
     @Override
     public int getAttackPower() {
-        return hero.getPower();
+        return hero.getStrength();  // strength = attack power
     }
 
     @Override
