@@ -36,7 +36,7 @@ public abstract class BaseEnemy implements Enemy {
         this.defense = (int)(this.defense * multiplier);
     }
 
-    // ── Added for HW3 ──
+    // Added for HW3
     @Override
     public void applyDamage(int amount) {
         this.health = Math.max(0, this.health - amount);
@@ -46,7 +46,7 @@ public abstract class BaseEnemy implements Enemy {
     public boolean isDefeated() {
         return this.health <= 0;
     }
-    // ───────────────────
+    //
 
     @Override public String getName()             { return name; }
     @Override public int getHealth()              { return health; }

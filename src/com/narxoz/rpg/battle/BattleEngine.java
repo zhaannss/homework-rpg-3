@@ -9,7 +9,6 @@ import java.util.Random;
 public final class BattleEngine {
 
     private static BattleEngine instance;
-
     private Random random;
 
     private BattleEngine() {
@@ -36,8 +35,11 @@ public final class BattleEngine {
         List<Combatant> aliveA = new ArrayList<>(teamA);
         List<Combatant> aliveB = new ArrayList<>(teamB);
 
-        System.out.println("=== BATTLE START ===");
-        printTeams(aliveA, aliveB);
+        System.out.println("\n╔══════════════════════════════╗");
+        System.out.println("║        BATTLE START          ║");
+        System.out.println("╚══════════════════════════════╝");
+        System.out.println("  Team A (Heroes): " + names(aliveA));
+        System.out.println("  Team B (Enemies): " + names(aliveB));
 
         int round = 1;
 
@@ -45,39 +47,36 @@ public final class BattleEngine {
             System.out.println("\n--- Round " + round + " ---");
 
             // Team A attacks Team B
-            executeAttacks(aliveA, aliveB, "Team A");
-
-            // Remove dead from B
+            attack(aliveA, aliveB, "Heroes");
             aliveB.removeIf(c -> !c.isAlive());
-
             if (aliveB.isEmpty()) break;
 
             // Team B attacks Team A
-            executeAttacks(aliveB, aliveA, "Team B");
-
-            // Remove dead from A
+            attack(aliveB, aliveA, "Enemies");
             aliveA.removeIf(c -> !c.isAlive());
 
-            System.out.println("  Survivors — Team A: " + names(aliveA) + " | Team B: " + names(aliveB));
+            System.out.println("  >> Alive — Heroes: " + names(aliveA)
+                    + " | Enemies: " + names(aliveB));
             round++;
         }
 
-        boolean teamAWon = !aliveA.isEmpty();
-        List<Combatant> survivors = teamAWon ? aliveA : aliveB;
-        String winnerName = teamAWon ? "Team A" : "Team B";
+        boolean heroesWon = !aliveA.isEmpty();
+        String winner = heroesWon ? "Team A (Heroes)" : "Team B (Enemies)";
+        List<Combatant> survivors = heroesWon ? aliveA : aliveB;
 
-        System.out.println("\n=== BATTLE END ===");
-        System.out.println("Winner: " + winnerName);
-        System.out.println("Survivors: " + names(survivors));
+        System.out.println("\n╔══════════════════════════════╗");
+        System.out.println("║         BATTLE END           ║");
+        System.out.println("╚══════════════════════════════╝");
+        System.out.println("  Winner: " + winner);
+        System.out.println("  Survivors: " + names(survivors));
 
-        return new EncounterResult(winnerName, survivors, round - 1);
+        return new EncounterResult(winner, survivors, round - 1);
     }
 
-    private void executeAttacks(List<Combatant> attackers, List<Combatant> defenders, String teamLabel) {
+    private void attack(List<Combatant> attackers, List<Combatant> defenders, String label) {
         for (Combatant attacker : attackers) {
-            if (defenders.isEmpty()) break;
+            if (!attacker.isAlive()) continue;
 
-            // Pick the first living defender
             Combatant target = defenders.stream()
                     .filter(Combatant::isAlive)
                     .findFirst()
@@ -88,26 +87,21 @@ public final class BattleEngine {
             int damage = attacker.getAttackPower();
             target.takeDamage(damage);
 
-            System.out.printf("  [%s] %s attacks %s for %d damage%s%n",
-                    teamLabel,
+            System.out.printf("  [%s] %s attacks %s for %d dmg%s%n",
+                    label,
                     attacker.getName(),
                     target.getName(),
                     damage,
-                    target.isAlive() ? "" : " — DEFEATED");
+                    target.isAlive() ? "" : " — DEFEATED!");
         }
     }
 
-    private void printTeams(List<Combatant> teamA, List<Combatant> teamB) {
-        System.out.println("Team A: " + names(teamA));
-        System.out.println("Team B: " + names(teamB));
-    }
-
-    private String names(List<Combatant> combatants) {
-        if (combatants.isEmpty()) return "(none)";
+    private String names(List<Combatant> list) {
+        if (list.isEmpty()) return "(none)";
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < combatants.size(); i++) {
-            sb.append(combatants.get(i).getName());
-            if (i < combatants.size() - 1) sb.append(", ");
+        for (int i = 0; i < list.size(); i++) {
+            sb.append(list.get(i).getName());
+            if (i < list.size() - 1) sb.append(", ");
         }
         return sb.toString();
     }

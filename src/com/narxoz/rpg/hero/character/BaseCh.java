@@ -33,7 +33,7 @@ public abstract class BaseCh implements Character {
     @Override public int getIntelligence()  { return intelligence; }
     @Override public int getAgility()       { return agility; }
 
-    // ── Added for HW3 ──
+    // Added for HW3
     public void receiveDamage(int amount) {
         this.health = Math.max(0, this.health - amount);
     }
@@ -41,7 +41,7 @@ public abstract class BaseCh implements Character {
     public boolean isAlive() {
         return this.health > 0;
     }
-    // ───────────────────
+    //
 
     @Override
     public void equipWeapon(Weapon weapon) {
@@ -70,6 +70,8 @@ public abstract class BaseCh implements Character {
         System.out.println("Strength: " + strength
                 + ", Intelligence: " + intelligence + ", Agility: " + agility);
     }
+
+
 
     @Override
     public abstract void useSpecialAbility();
