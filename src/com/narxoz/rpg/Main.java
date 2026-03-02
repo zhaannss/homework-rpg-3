@@ -74,5 +74,31 @@ public class Main {
                 new BossEnemyBuilder(), new ShadowComponentFactory());
         shadowBoss.setName("Shadow Guardian");
         shadowBoss.displayInfo();
+
+
+        // 4. ADAPTER — оборачиваем всех в Combatant
+
+        System.out.println("\n=== Adapter Check ===");
+
+        List<Combatant> teamA = new ArrayList<>();
+        teamA.add(new HeroCombatantAdapter(warrior));
+        teamA.add(new HeroCombatantAdapter(mage));
+        teamA.add(new HeroCombatantAdapter(archer));
+
+        List<Combatant> teamB = new ArrayList<>();
+        teamB.add(new EnemyCombatantAdapter(goblin));
+        teamB.add(new EnemyCombatantAdapter(iceElite));
+        teamB.add(new EnemyCombatantAdapter(shadowBoss));
+
+        System.out.println("Team A adapters — all Combatant: true");
+        System.out.println("Team B adapters — all Combatant: true");
+
+
+        // 5. БОЙ через BattleEngine (Singleton)
+
+        EncounterResult result = BattleEngine.getInstance()
+                .runEncounter(teamA, teamB);
+
+        System.out.println(result);
     }
 }
