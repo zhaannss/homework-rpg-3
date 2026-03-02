@@ -1,13 +1,13 @@
 package com.narxoz.rpg;
 
-import com.narxoz.rpg.adapter.EnemyCombatantAdapter;
-import com.narxoz.rpg.adapter.HeroCombatantAdapter;
-import com.narxoz.rpg.battle.BattleEngine;
-import com.narxoz.rpg.battle.Combatant;
-import com.narxoz.rpg.battle.EncounterResult;
-import com.narxoz.rpg.enemy.Goblin;
-import com.narxoz.rpg.hero.Mage;
-import com.narxoz.rpg.hero.Warrior;
+import com.narxoz.rpg.hw3.adapter.EnemyCombatantAdapter;
+import com.narxoz.rpg.hw3.adapter.HeroCombatantAdapter;
+import com.narxoz.rpg.hw3.battle.BattleEngine;
+import com.narxoz.rpg.hw3.battle.Combatant;
+import com.narxoz.rpg.hw3.battle.EncounterResult;
+import com.narxoz.rpg.hw3.enemy.Goblin;
+import com.narxoz.rpg.hw3.hero.Mage;
+import com.narxoz.rpg.hw3.hero.Warrior;
 
 import java.util.ArrayList;
 import java.util.List;
