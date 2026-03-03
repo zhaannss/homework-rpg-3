@@ -1,63 +1,184 @@
-# Homework 3: RPG Battle Engine — Singleton + Adapter
+# RPG Battle Engine — Homework 3
 
-## Overview
-You now have heroes (HW1) and enemies (HW2). The studio wants a **battle engine** that can run fights between them. The problem is that heroes and enemies expose different APIs, and the game must still be clean and extensible.
+Homework 3 on design patterns.  
+Heroes from HW1 and enemies from HW2 finally fight each other.
 
-Your mission: **use Singleton and Adapter patterns** to integrate gameplay.
+---
 
-## What You Will Build
-- A global battle engine (Singleton)
-- A unified combat interface (Adapter)
-- A demo that runs a battle between heroes and enemies
+## What was done
 
-## Patterns and Roles
-- **Singleton**: `BattleEngine` is the single coordinator of battles
-- **Adapter**: `HeroCombatantAdapter` and `EnemyCombatantAdapter` translate different APIs into a shared `Combatant` interface
+- **Singleton** — one global `BattleEngine` for the whole game
+- **Adapter** — heroes and enemies have different methods, adapters bring them to a unified `Combatant` interface
+- **Battle** — round-based simulation, dead combatants are removed, winner is determined automatically
 
-## Connection to Previous Homework
-- **HW1** created heroes with Factory patterns
-- **HW2** created enemies with Builder + Prototype
-- **HW3** makes them fight using Singleton + Adapter
+---
 
-## Requirements at a Glance
-- Implement a Singleton battle engine
-- Implement Adapter classes to wrap heroes and enemies
-- Create a round-based battle simulation
-- Demonstrate everything in `Main.java`
-- Provide UML diagrams for Singleton and Adapter
+## Patterns
 
-## Running the Project
+### Singleton
+```java
+BattleEngine e1 = BattleEngine.getInstance();
+BattleEngine e2 = BattleEngine.getInstance();
+System.out.println(e1 == e2); // true — always one object
+```
+
+### Adapter
+
+| Combatant method | Hero (BaseCh) | Enemy (BaseEnemy) |
+|------------------|---------------|-------------------|
+| `getName()` | `getName()` | `getName()` |
+| `getAttackPower()` | `getStrength()` | `getDamage()` |
+| `takeDamage(int)` | `receiveDamage(int)` | `applyDamage(int)` |
+| `isAlive()` | `isAlive()` | `!isDefeated()` |
+
+---
+
+## Connection to previous homeworks
+
+- **HW1** — creating heroes via Factory
+- **HW2** — creating enemies via Builder + Prototype
+- **HW3** — battle between them via Singleton + Adapter
+
+---
+
+## Project structure
+
+```
+homework-rpg-3/
+└── src/com/narxoz/rpg/
+    ├── Main.java
+    ├── diagrams/
+    ├── adapter/
+    │   ├── Combatant.java
+    │   ├── HeroCombatantAdapter.java
+    │   └── EnemyCombatantAdapter.java
+    ├── battle/
+    │   ├── BattleEngine.java
+    │   └── EncounterResult.java
+    ├── hero/
+    └── enemy/
+```
+
+---
+
+## How to run
+
 ```bash
-# Compile
 javac -d out $(find src -name "*.java")
-
-# Run
 java -cp out com.narxoz.rpg.Main
 ```
 
-## Project Structure
+---
+
+## Sample output
+
 ```
-homework_rpg_3/
-├── src/
-│   └── com/
-│       └── narxoz/
-│           └── rpg/
-│               ├── Main.java
-│               ├── battle/
-│               ├── adapter/
-│               ├── hero/
-│               ├── enemy/
-│               └── hints/
-├── ASSIGNMENT.md
-├── QUICKSTART.md
-├── FAQ.md
-├── STUDENT_CHECKLIST.md
-└── README.md
+=== Singleton Check ===
+engine1 == engine2: true
+
+║  BATTLE START  ║
+Team A (Heroes):  Aragorn, Gandalf, Legolas
+Team B (Enemies): Goblin, Ice Warrior, Shadow Guardian
+
+--- Round 1 ---
+[Heroes]  Aragorn attacks Goblin for 120 dmg — DEFEATED!
+[Enemies] Shadow Guardian attacks Aragorn for 80 dmg
+
+║  BATTLE END  ║
+Winner: Team B (Enemies)
+Survivors: Shadow Guardian
 ```
 
-## Deliverables
-- Completed Java code
-- UML diagrams (2)
-- Clear demo output
+---
 
-Good luck. Keep the architecture clean and your patterns explicit.
+# RPG Battle Engine — Домашнее задание 3
+
+Третье домашнее задание по паттернам проектирования.  
+Герои из HW1 и враги из HW2 наконец сражаются друг с другом.
+
+---
+
+## Что сделано
+
+- **Singleton** — один глобальный `BattleEngine` на всю игру
+- **Adapter** — герои и враги имеют разные методы, адаптеры приводят их к единому интерфейсу `Combatant`
+- **Бой** — пораундовая симуляция, мёртвые удаляются, победитель определяется автоматически
+
+---
+
+## Паттерны
+
+### Singleton
+```java
+BattleEngine e1 = BattleEngine.getInstance();
+BattleEngine e2 = BattleEngine.getInstance();
+System.out.println(e1 == e2); // true — всегда один объект
+```
+
+### Adapter
+
+| Метод Combatant | Hero (BaseCh) | Enemy (BaseEnemy) |
+|-----------------|---------------|-------------------|
+| `getName()` | `getName()` | `getName()` |
+| `getAttackPower()` | `getStrength()` | `getDamage()` |
+| `takeDamage(int)` | `receiveDamage(int)` | `applyDamage(int)` |
+| `isAlive()` | `isAlive()` | `!isDefeated()` |
+
+---
+
+## Связь с предыдущими ДЗ
+
+- **HW1** — создание героев через Factory
+- **HW2** — создание врагов через Builder + Prototype
+- **HW3** — бой между ними через Singleton + Adapter
+
+---
+
+## Структура проекта
+
+```
+homework-rpg-3/
+└── src/com/narxoz/rpg/
+    ├── Main.java
+    ├── diagrams/
+    ├── adapter/
+    │   ├── Combatant.java
+    │   ├── HeroCombatantAdapter.java
+    │   └── EnemyCombatantAdapter.java
+    ├── battle/
+    │   ├── BattleEngine.java
+    │   └── EncounterResult.java
+    ├── hero/
+    └── enemy/
+```
+
+---
+
+## Запуск
+
+```bash
+javac -d out $(find src -name "*.java")
+java -cp out com.narxoz.rpg.Main
+```
+
+---
+
+## Пример вывода
+
+```
+=== Singleton Check ===
+engine1 == engine2: true
+
+║  BATTLE START  ║
+Team A (Heroes):  Aragorn, Gandalf, Legolas
+Team B (Enemies): Goblin, Ice Warrior, Shadow Guardian
+
+--- Round 1 ---
+[Heroes]  Aragorn attacks Goblin for 120 dmg — DEFEATED!
+[Enemies] Shadow Guardian attacks Aragorn for 80 dmg
+
+║  BATTLE END  ║
+Winner: Team B (Enemies)
+Survivors: Shadow Guardian
+```
+
