@@ -1,7 +1,6 @@
 package com.narxoz.rpg.adapter;
 
-import com.narxoz.rpg.battle.Combatant;
-import com.narxoz.rpg.enemy.Enemy;
+import com.narxoz.rpg.enemy.enemy.Enemy;
 
 public class EnemyCombatantAdapter implements Combatant {
     private final Enemy enemy;
@@ -12,12 +11,11 @@ public class EnemyCombatantAdapter implements Combatant {
 
     @Override
     public String getName() {
-        return enemy.getTitle();
+        return enemy.getName();
     }
 
     @Override
     public int getAttackPower() {
-        // TODO: translate enemy damage to combat attack
         return enemy.getDamage();
     }
 
